@@ -76,6 +76,10 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game play(String gameId, String userId, int column) {
+        if (!gameMap.containsKey(gameId)){
+            throw  new GameNotFoundException("No game found with the gameId: "+gameId);
+        }
+
         Game game = gameMap.get(gameId);
 
         if (GameStatus.CREATED.equals(game.getStatus())){
@@ -92,7 +96,7 @@ public class GameServiceImpl implements GameService {
 
         Player player = game.getPlayer1().getUserId().equals(userId)?game.getPlayer1():game.getPlayer2();
         if (player.getDiscColor().equals(game.getLastPlayedDisc())){
-            throw new InvalidGamePlayException("Game should be played by other Player");
+            throw new InvalidGamePlayException("Game should be played by opposite Player");
         }
 
         game.dropDisc(player.getDiscColor(), column);

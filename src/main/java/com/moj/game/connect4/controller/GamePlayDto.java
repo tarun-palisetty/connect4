@@ -1,5 +1,9 @@
 package com.moj.game.connect4.controller;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 /**
@@ -8,12 +12,15 @@ import javax.validation.constraints.NotNull;
 public class GamePlayDto {
 
     @NotNull
+    @NotEmpty
     private String userId;
 
     @NotNull
+    @NotEmpty
     private String color;
 
-    @NotNull
+    @Min(0)
+    @Max(6)
     private int column;
 
     public String getUserId() {

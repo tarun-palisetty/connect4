@@ -2,6 +2,10 @@ package com.moj.game.connect4.controller;
 
 import com.moj.game.connect4.common.DiscColor;
 import com.moj.game.connect4.common.GameStatus;
+import com.moj.game.connect4.exception.GameNotFoundException;
+import com.moj.game.connect4.exception.InvalidGamePlayException;
+import com.moj.game.connect4.exception.InvalidGameStatusException;
+import com.moj.game.connect4.exception.NoPlayerSpaceException;
 import com.moj.game.connect4.model.Game;
 import com.moj.game.connect4.model.GameResponse;
 import com.moj.game.connect4.service.GameService;
@@ -48,7 +52,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/games/{gameId}", method = RequestMethod.PUT)
-    public GameResponse joinGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto){
+    public GameResponse joinGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto) throws  GameNotFoundException, NoPlayerSpaceException {
         Game game = gameService.joinGame(gameId, dto.getUserId());
         GameResponse gameResponse = new GameResponse(game);
         gameResponse.setMessage("User: "+ dto.getUserId()+" joined the game: "+gameId+" with disc color: "+game.getPlayer2().getDiscColor());
@@ -58,7 +62,7 @@ public class GameController {
 
     //409 - Conflict
     @RequestMapping(value = "/games/{gameId}/discs", method = RequestMethod.PUT)
-    public GameResponse playGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto){
+    public GameResponse playGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto) throws GameNotFoundException, InvalidGameStatusException, InvalidGamePlayException {
         if (dto.getColumn()<0 || dto.getColumn()>6){
             throw new IllegalArgumentException("Column value should be between 0 and 6");
         }
@@ -75,6 +79,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/games/{gameId}/outcome", method = RequestMethod.GET)
+    @ResponseStatus(HttpStatus.OK)
     public GameResponse gameOutCome(@PathVariable @NotNull String gameId){
         Game game = gameService.getGame(gameId);
 
