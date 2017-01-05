@@ -15,8 +15,6 @@ public class GamePlayDto {
     @NotEmpty
     private String userId;
 
-    @NotNull
-    @NotEmpty
     private String color;
 
     @Min(0)

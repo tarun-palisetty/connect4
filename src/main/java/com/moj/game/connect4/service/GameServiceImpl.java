@@ -42,6 +42,9 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game getGame(String gameId) {
+        if (!gameMap.containsKey(gameId)){
+           throw new GameNotFoundException("Game with Id: "+gameId+" not found.");
+        }
         return gameMap.get(gameId);
     }
 
@@ -61,8 +64,8 @@ public class GameServiceImpl implements GameService {
 
             Player player = new Player();
             player.setUserId(userId);
-            DiscColor player2DiscColor = game.getPlayer1().equals(DiscColor.RED) ? DiscColor.YELLOW : DiscColor.RED;
-            player2DiscColor=DiscColor.YELLOW;
+            DiscColor player2DiscColor = game.getPlayer1().getDiscColor().equals(DiscColor.RED) ? DiscColor.YELLOW : DiscColor.RED;
+            //player2DiscColor=DiscColor.YELLOW;
             player.setDiscColor(player2DiscColor);
             game.setPlayer2(player);
             game.setStatus(GameStatus.STARTED);

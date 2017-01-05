@@ -43,7 +43,7 @@ public class GameController {
 
     @RequestMapping(value = "/games/{gameId}", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse getGame(@PathVariable @NotNull String gameId){
+    public GameResponse getGame(@PathVariable @NotNull String gameId) throws GameNotFoundException{
         Game game = gameService.getGame(gameId);
 
         GameResponse gameResponse = new GameResponse(game);
@@ -52,6 +52,7 @@ public class GameController {
     }
 
     @RequestMapping(value = "/games/{gameId}", method = RequestMethod.PUT)
+    //@ResponseStatus(HttpStatus.OK)
     public GameResponse joinGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto) throws  GameNotFoundException, NoPlayerSpaceException {
         Game game = gameService.joinGame(gameId, dto.getUserId());
         GameResponse gameResponse = new GameResponse(game);
@@ -60,8 +61,8 @@ public class GameController {
     }
 
 
-    //409 - Conflict
     @RequestMapping(value = "/games/{gameId}/discs", method = RequestMethod.PUT)
+    //@ResponseStatus(HttpStatus.OK)
     public GameResponse playGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto) throws GameNotFoundException, InvalidGameStatusException, InvalidGamePlayException {
         if (dto.getColumn()<0 || dto.getColumn()>6){
             throw new IllegalArgumentException("Column value should be between 0 and 6");
