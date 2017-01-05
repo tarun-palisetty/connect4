@@ -19,6 +19,7 @@
    		http://localhost:8080/connect4/games
    
    		JSON Request body:
+   		
    		{
 			"userId":"Player1",
 			"color":"RED",
@@ -45,6 +46,7 @@
 		http://localhost:8080/connect4/games/{gameId}
    
    		JSON Request body:
+   		
    		{
 			"userId":"Player2",
 			"color":"YELLOW",
@@ -54,14 +56,26 @@
    iv) Play Game
      
        This call allows the Players in the game to drop their disc in each turn, No player can drop two discs consiqutively and
-       this result 409 HTTP error code.
+       this result 409 HTTP error code. And also the method can result in WINNER during the play.
        
        http://localhost:8080/connect4/games/{gameId}/discs
    
    	   JSON Request body:
+   	   
        {
 			"userId":"Player1",
 			"color":"RED",
 			"column":1
    		}
+   	
+    v) Game Outcome
+    
+    	This call can fetch the game outcome
+    	
+    	Method: GET
+    	
+    	http://localhost:8080/connect4/games/{gameId}/outcome
+    	
+   		
+   	
    
