@@ -24,8 +24,7 @@
    		
    		{
 			"userId":"Player1",
-			"color":"RED",
-			"column":1
+			"color":"RED"
    		}
    
    
@@ -50,9 +49,7 @@
    		JSON Request body:
    		
    		{
-			"userId":"Player2",
-			"color":"YELLOW",
-			"column":1
+			"userId":"Player2"
    		}
    
 # iv) Play Game
@@ -68,7 +65,6 @@
    	   
        {
 			"userId":"Player1",
-			"color":"RED",
 			"column":1
    		}
    		
