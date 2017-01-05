@@ -1,4 +1,6 @@
-# connect4 Game Implementation using Spring Boot and Rest
+# Connect4 Game - Implementation Using Spring Boot and Rest
+   This is a Spring boot application which exposes REST services for connect4 game play.
+
 
 #1. How to build the application
    
