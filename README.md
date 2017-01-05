@@ -10,7 +10,7 @@
 	
 #3. How to test the REST Services
    
-   # i) Create New Game
+# i) Create New Game
       
       This call creates a new game with one player and his disc color of choice.
    
@@ -27,7 +27,7 @@
    		}
    
    
-   # ii) Get Game
+# ii) Get Game
        
        This call returns the game associated with gameId
    
@@ -37,7 +37,7 @@
    		
    		Here gameId is the request parameter, for testing this gameId can be captured from the above JSON response
    
-	# iii) Join Game
+# iii) Join Game
 	
 	     This call allows the player2 to join the game created by player1 using the gameId
 	
@@ -53,7 +53,7 @@
 			"column":1
    		}
    
-   # iv) Play Game
+# iv) Play Game
      
        This call allows the Players in the game to drop their disc in each turn, No player can drop two discs consiqutively and
        this result 409 HTTP error code. And also the method can result in WINNER during the play.
