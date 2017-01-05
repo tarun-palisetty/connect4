@@ -43,7 +43,7 @@
 	
 		 Method: PUT
 	
-		http://localhost:8080/connect4/games/{gameId}
+		 http://localhost:8080/connect4/games/{gameId}
    
    		JSON Request body:
    		
@@ -58,6 +58,8 @@
        This call allows the Players in the game to drop their disc in each turn, No player can drop two discs consiqutively and
        this result 409 HTTP error code. And also the method can result in WINNER during the play.
        
+       Method: PUT
+       
        http://localhost:8080/connect4/games/{gameId}/discs
    
    	   JSON Request body:
@@ -70,7 +72,7 @@
    	
     v) Game Outcome
     
-    	This call can fetch the game outcome
+    	This call will fetch the game outcome
     	
     	Method: GET
     	
