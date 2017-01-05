@@ -1,6 +1,5 @@
-package com.moj.game.connect4.model;
+package com.moj.game.connect4.dto;
 
-import com.moj.game.connect4.common.DiscColor;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
@@ -8,13 +7,15 @@ import javax.validation.constraints.NotNull;
 /**
  * Created by tarun on 05/01/2017.
  */
-public class Player {
 
+public class NewGameDto {
+    @NotNull
+    @NotEmpty
     private String userId;
 
+    @NotNull
+    @NotEmpty
     private String color;
-
-    private DiscColor discColor;
 
     public String getUserId() {
         return userId;
@@ -24,12 +25,11 @@ public class Player {
         this.userId = userId;
     }
 
-    public DiscColor getDiscColor() {
-        return discColor;
+    public String getColor() {
+        return color;
     }
 
-    public void setDiscColor(DiscColor discColor) {
-        this.discColor = discColor;
+    public void setColor(String color) {
+        this.color = color;
     }
-
 }

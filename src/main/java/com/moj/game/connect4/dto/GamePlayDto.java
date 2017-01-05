@@ -1,4 +1,4 @@
-package com.moj.game.connect4.controller;
+package com.moj.game.connect4.dto;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -15,10 +15,8 @@ public class GamePlayDto {
     @NotEmpty
     private String userId;
 
-    private String color;
-
-    @Min(0)
-    @Max(6)
+    @Min(1)
+    @Max(7)
     private int column;
 
     public String getUserId() {
@@ -37,11 +35,4 @@ public class GamePlayDto {
         this.column = column;
     }
 
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
 }

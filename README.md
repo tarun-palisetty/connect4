@@ -69,6 +69,8 @@
 			"color":"RED",
 			"column":1
    		}
+   		
+   	
    	
 # v) Game Outcome
     
@@ -77,7 +79,12 @@
     	Method: GET
     	
     	http://localhost:8080/connect4/games/{gameId}/outcome
+
+#4. Validations
+    There are different validations put in place for the with user friendly messages and HTTP response code.
     	
-   		
+   	
+#5. JUnits
+    Test cases have been implemented for different edge cases scenarios of Connect4 game play.
    	
    

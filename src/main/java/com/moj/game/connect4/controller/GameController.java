@@ -2,6 +2,9 @@ package com.moj.game.connect4.controller;
 
 import com.moj.game.connect4.common.DiscColor;
 import com.moj.game.connect4.common.GameStatus;
+import com.moj.game.connect4.dto.GamePlayDto;
+import com.moj.game.connect4.dto.NewGameDto;
+import com.moj.game.connect4.dto.PlayerDto;
 import com.moj.game.connect4.exception.GameNotFoundException;
 import com.moj.game.connect4.exception.InvalidGamePlayException;
 import com.moj.game.connect4.exception.InvalidGameStatusException;
@@ -33,9 +36,9 @@ public class GameController {
 
     @RequestMapping(value = "/games", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public GameResponse startNewGame(@RequestBody @Validated GamePlayDto dto){
-        validateColor(dto.getColor());
-        Game game = gameService.startNewGame(dto.getUserId(), dto.getColor());
+    public GameResponse startNewGame(@RequestBody @Validated NewGameDto player){
+        validateColor(player.getColor());
+        Game game = gameService.startNewGame(player.getUserId(), player.getColor());
         GameResponse gameResponse = new GameResponse(game);
         gameResponse.setMessage("Game is created successfully");
         return gameResponse;
@@ -53,10 +56,10 @@ public class GameController {
 
     @RequestMapping(value = "/games/{gameId}", method = RequestMethod.PUT)
     //@ResponseStatus(HttpStatus.OK)
-    public GameResponse joinGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto) throws  GameNotFoundException, NoPlayerSpaceException {
-        Game game = gameService.joinGame(gameId, dto.getUserId());
+    public GameResponse joinGame(@PathVariable @NotNull String gameId, @RequestBody @Validated PlayerDto player) throws  GameNotFoundException, NoPlayerSpaceException {
+        Game game = gameService.joinGame(gameId, player.getUserId());
         GameResponse gameResponse = new GameResponse(game);
-        gameResponse.setMessage("User: "+ dto.getUserId()+" joined the game: "+gameId+" with disc color: "+game.getPlayer2().getDiscColor());
+        gameResponse.setMessage("User: "+ player.getUserId()+" joined the game: "+gameId+" with disc color: "+game.getPlayer2().getDiscColor());
         return gameResponse;
     }
 
@@ -64,11 +67,11 @@ public class GameController {
     @RequestMapping(value = "/games/{gameId}/discs", method = RequestMethod.PUT)
     //@ResponseStatus(HttpStatus.OK)
     public GameResponse playGame(@PathVariable @NotNull String gameId, @RequestBody @Validated GamePlayDto dto) throws GameNotFoundException, InvalidGameStatusException, InvalidGamePlayException {
-        if (dto.getColumn()<0 || dto.getColumn()>6){
-            throw new IllegalArgumentException("Column value should be between 0 and 6");
+        if (dto.getColumn()<1 || dto.getColumn()>7){
+            throw new IllegalArgumentException("Column value should be between 1 and 7");
         }
 
-        Game game = gameService.play(gameId, dto.getUserId(), dto.getColumn());
+        Game game = gameService.play(gameId, dto.getUserId(), dto.getColumn()-1);
         GameResponse gameResponse = new GameResponse(game);
         gameResponse.setMessage("User: "+ dto.getUserId()+" dropped the disc on column: "+ dto.getColumn()+" for the game: "+gameId);
 
@@ -81,12 +84,12 @@ public class GameController {
 
     @RequestMapping(value = "/games/{gameId}/outcome", method = RequestMethod.GET)
     @ResponseStatus(HttpStatus.OK)
-    public GameResponse gameOutCome(@PathVariable @NotNull String gameId){
+    public GameResponse gameOutCome(@PathVariable @NotNull String gameId) throws GameNotFoundException{
         Game game = gameService.getGame(gameId);
 
         GameResponse gameResponse = new GameResponse(game);
         if (GameStatus.COMPLETED.equals(game.getStatus())){
-            gameResponse.setMessage(gameResponse.getMessage()+" User: "+game.getPlayer1()+" won the game.");
+            gameResponse.setMessage(gameResponse.getMessage()+" Game: "+gameId+" won the game.");
         }
         return  gameResponse;
     }

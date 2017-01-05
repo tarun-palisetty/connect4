@@ -99,7 +99,7 @@ public class GameServiceImpl implements GameService {
 
         Player player = game.getPlayer1().getUserId().equals(userId)?game.getPlayer1():game.getPlayer2();
         if (player.getDiscColor().equals(game.getLastPlayedDisc())){
-            throw new InvalidGamePlayException("Game should be played by opposite Player");
+            throw new InvalidGamePlayException("Now the drop disc turn is for you opponent Player");
         }
 
         game.dropDisc(player.getDiscColor(), column);
