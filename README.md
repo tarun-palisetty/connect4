@@ -70,7 +70,7 @@
 			"column":1
    		}
    	
-	# v) Game Outcome
+# v) Game Outcome
     
     	This call will fetch the game outcome
     	
