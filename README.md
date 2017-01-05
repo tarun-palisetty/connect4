@@ -81,7 +81,7 @@
     	http://localhost:8080/connect4/games/{gameId}/outcome
 
 #4. Validations
-    There are different validations put in place for the with user friendly messages and HTTP response code.
+    There are different validations put in place with user friendly messages and HTTP response code.
     	
    	
 #5. JUnits
