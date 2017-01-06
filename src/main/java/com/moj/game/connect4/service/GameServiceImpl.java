@@ -41,43 +41,31 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game joinGame(String gameId, String userId) {
-        Map<String, Game> gameMap = gameRepository.getMap();
 
-        if(gameMap.containsKey(gameId)) {
+        Game game = getGame(gameId);
 
-            Game game = gameMap.get(gameId);
-
-            if (game.getPlayer2() != null) {
-                throw new NoPlayerSpaceException("Game does not have room for new player");
-            }
-
-            if (game.getPlayer1().getUserId().equals(userId)) {
-                throw new NoPlayerSpaceException("Player with id: " + userId + " already exists.");
-            }
-
-            Player player = new Player();
-            player.setUserId(userId);
-            DiscColor player2DiscColor = game.getPlayer1().getDiscColor().equals(DiscColor.RED) ? DiscColor.YELLOW : DiscColor.RED;
-            player.setDiscColor(player2DiscColor);
-            game.setPlayer2(player);
-            game.setStatus(GameStatus.STARTED);
-
-            return game;
-        } else {
-            throw new GameNotFoundException("Game with id:"+gameId+" is not found.");
+        if (game.getPlayer2() != null) {
+            throw new NoPlayerSpaceException("Game does not have room for new player");
         }
+
+        if (game.getPlayer1().getUserId().equals(userId)) {
+            throw new NoPlayerSpaceException("Player with id: " + userId + " already exists.");
+        }
+
+        Player player = new Player();
+        player.setUserId(userId);
+        DiscColor player2DiscColor = game.getPlayer1().getDiscColor().equals(DiscColor.RED) ? DiscColor.YELLOW : DiscColor.RED;
+        player.setDiscColor(player2DiscColor);
+        game.setPlayer2(player);
+        game.setStatus(GameStatus.STARTED);
+
+        return game;
 
     }
 
     @Override
     public Game play(String gameId, String userId, int column) {
-        Map<String, Game> gameMap = gameRepository.getMap();
-
-        if (!gameMap.containsKey(gameId)){
-            throw  new GameNotFoundException("No game found with the gameId: "+gameId);
-        }
-
-        Game game = gameMap.get(gameId);
+        Game game = getGame(gameId);
 
         if (GameStatus.CREATED.equals(game.getStatus())){
             throw new InvalidGameStatusException("Game does not have enough players.");

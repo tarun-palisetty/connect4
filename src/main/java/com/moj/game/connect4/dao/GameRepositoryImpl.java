@@ -21,11 +21,6 @@ public class GameRepositoryImpl implements GameRepository {
 
 
     @Override
-    public Map<String, Game> getMap() {
-        return gameMap;
-    }
-
-    @Override
     public Game createNewGame(String userId, String color) {
         Player player = new Player();
         player.setUserId(userId);

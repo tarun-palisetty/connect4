@@ -9,8 +9,6 @@ import java.util.Map;
  */
 public interface GameRepository {
 
-    Map<String, Game> getMap();
-
     Game createNewGame(String userId, String color);
 
     Game getGame(String gameId);
