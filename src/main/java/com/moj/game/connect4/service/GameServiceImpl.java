@@ -31,11 +31,15 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game startNewGame(String userId, String color) {
-        return gameRepository.createNewGame(userId, color);
+        return gameRepository.createGame(userId, color);
     }
 
     @Override
     public Game getGame(String gameId) {
+        Game game = gameRepository.getGame(gameId);
+        if (game == null){
+            throw new GameNotFoundException("Game with Id: "+gameId+" is not found.");
+        }
         return gameRepository.getGame(gameId);
     }
 
@@ -58,6 +62,8 @@ public class GameServiceImpl implements GameService {
         player.setDiscColor(player2DiscColor);
         game.setPlayer2(player);
         game.setStatus(GameStatus.STARTED);
+
+        gameRepository.updateGame(game);
 
         return game;
 
@@ -88,6 +94,8 @@ public class GameServiceImpl implements GameService {
         if (game.calculateWinner()){
             game.setStatus(GameStatus.COMPLETED);
         }
+
+        gameRepository.updateGame(game);
 
         return game;
     }

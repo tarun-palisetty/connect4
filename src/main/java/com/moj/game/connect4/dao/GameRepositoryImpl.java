@@ -21,7 +21,7 @@ public class GameRepositoryImpl implements GameRepository {
 
 
     @Override
-    public Game createNewGame(String userId, String color) {
+    public Game createGame(String userId, String color) {
         Player player = new Player();
         player.setUserId(userId);
         player.setDiscColor(DiscColor.valueOf(color));
@@ -37,12 +37,13 @@ public class GameRepositoryImpl implements GameRepository {
 
     @Override
     public Game getGame(String gameId) {
-        if (!gameMap.containsKey(gameId)){
-            throw new GameNotFoundException("Game with Id: "+gameId+" not found.");
-        }
         return gameMap.get(gameId);
     }
 
+    @Override
+    public void updateGame(Game updatedGame) {
+        gameMap.replace(updatedGame.getId(), updatedGame);
+    }
 
 
 }

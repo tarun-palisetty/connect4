@@ -9,7 +9,9 @@ import java.util.Map;
  */
 public interface GameRepository {
 
-    Game createNewGame(String userId, String color);
+    Game createGame(String userId, String color);
 
     Game getGame(String gameId);
+
+    void updateGame(Game game);
 }

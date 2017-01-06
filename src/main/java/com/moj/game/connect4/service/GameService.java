@@ -1,5 +1,6 @@
 package com.moj.game.connect4.service;
 
+import com.moj.game.connect4.exception.GameNotFoundException;
 import com.moj.game.connect4.model.Game;
 
 /**
