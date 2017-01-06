@@ -36,7 +36,7 @@
    
    		http://localhost:8080/connect4/games/{gameId}
    		
-   		Here gameId is the request parameter, for testing this gameId can be captured from the above JSON response
+   		Here gameId is the path parameter, for testing this gameId can be captured from the above JSON response
    
 # iii) Join Game
 	

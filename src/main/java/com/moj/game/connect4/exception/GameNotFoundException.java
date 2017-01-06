@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Created by tarun on 05/01/2017.
  */
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
+@ResponseStatus(HttpStatus.NOT_FOUND)
 public class GameNotFoundException extends GameException {
 
     public GameNotFoundException(String message){
