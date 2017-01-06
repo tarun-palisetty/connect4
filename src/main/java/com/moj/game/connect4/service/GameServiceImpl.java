@@ -2,18 +2,18 @@ package com.moj.game.connect4.service;
 
 import com.moj.game.connect4.common.DiscColor;
 import com.moj.game.connect4.common.GameStatus;
+import com.moj.game.connect4.dao.GameRepository;
 import com.moj.game.connect4.exception.GameNotFoundException;
 import com.moj.game.connect4.exception.InvalidGamePlayException;
 import com.moj.game.connect4.exception.InvalidGameStatusException;
 import com.moj.game.connect4.exception.NoPlayerSpaceException;
 import com.moj.game.connect4.model.Game;
-import com.moj.game.connect4.model.GameResponse;
 import com.moj.game.connect4.model.Player;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by tarun on 05/01/2017.
@@ -22,34 +22,27 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class GameServiceImpl implements GameService {
 
-    private Map<String, Game> gameMap = new ConcurrentHashMap<>();
+    private GameRepository gameRepository;
 
-
+    @Autowired
+    public void setGameRepository(GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+    }
 
     @Override
     public Game startNewGame(String userId, String color) {
-        Player player = new Player();
-        player.setUserId(userId);
-        player.setDiscColor(DiscColor.valueOf(color));
-
-        Game game = new Game();
-        game.setId(UUID.randomUUID().toString());
-        game.setPlayer1(player);
-        //save
-        gameMap.put(game.getId(), game);
-        return game;
+        return gameRepository.createNewGame(userId, color);
     }
 
     @Override
     public Game getGame(String gameId) {
-        if (!gameMap.containsKey(gameId)){
-           throw new GameNotFoundException("Game with Id: "+gameId+" not found.");
-        }
-        return gameMap.get(gameId);
+        return gameRepository.getGame(gameId);
     }
 
     @Override
     public Game joinGame(String gameId, String userId) {
+        Map<String, Game> gameMap = gameRepository.getMap();
+
         if(gameMap.containsKey(gameId)) {
 
             Game game = gameMap.get(gameId);
@@ -78,6 +71,8 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public Game play(String gameId, String userId, int column) {
+        Map<String, Game> gameMap = gameRepository.getMap();
+
         if (!gameMap.containsKey(gameId)){
             throw  new GameNotFoundException("No game found with the gameId: "+gameId);
         }
