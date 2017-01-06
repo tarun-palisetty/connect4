@@ -56,8 +56,8 @@
    
 # iv) Play Game
      
-       This call allows the Players in the game to drop their disc in each turn, No player can drop two discs consiqutively and
-       this result 409 HTTP error code. And also the method can result in WINNER during the play.
+       This call allows the Players in the game to drop their disc in each turn, No player can drop two discs consecutively and
+       this result 409 HTTP error code. And also the method can result in WINNER during the play with Player details in the response.
        
        Method: PUT
        
