@@ -51,6 +51,8 @@
    		{
 			"userId":"Player2"
    		}
+   		
+   		** The player2 disc color is automatically assigned based on the player1 ones selection.
    
 # iv) Play Game
      
